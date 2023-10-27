@@ -1,3 +1,5 @@
+<p align="center"><img src="cachetastic.png" alt="frankenstein" height="300px"></p>
+
 # Cachetastic - Supercharge Your Laravel Caching!
 
 ## Table of Contents

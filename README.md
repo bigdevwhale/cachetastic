@@ -6,6 +6,7 @@
 - [Getting Started](#getting-started)
 - [Examples](#examples)
 - [Use Cases](#use-cases)
+- [Overwriting Cache Keys](#use-cases)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -82,7 +83,14 @@ Cachetastic provides the following methods for customizing caching:
 - **setCacheKeyParams(array $cacheKeyParams)**: Set parameter keys to use for cache key generation.
 - **setCustomCacheKey(string $customCacheKey)**: Set a custom cache key to be used instead of generating one.
 
+By default, the cache duration is set to 60 minutes.
+
 You can use these methods to further customize your caching experience.
+
+## Overwriting Cache Keys
+Please note that if two methods are executed in the same class with only array parameters, they will overwrite each 
+other's cache value since only scalar parameters are used for cache key generation. In this case, consider using the 
+**setCustomCacheKey** method described above.
 
 ## Contributing
 We welcome contributions from the open-source community. Feel free to submit bug reports, feature requests, or pull requests on our GitHub repository.

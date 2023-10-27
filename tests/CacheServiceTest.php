@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use Cachetastic\CacheService;
+use Cachetastic\Cachetastic;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 
@@ -23,7 +23,7 @@ class CacheServiceTest extends TestCase
     {
         // Arrange
         $apiWrapper = new MockApiWrapper();
-        $cacheService = new CacheService($apiWrapper, 'fetchData', [1, 2]);
+        $cacheService = new Cachetastic($apiWrapper, 'fetchData', [1, 2]);
         $cacheService->setCacheDuration(60);
 
         // Create a mock for the Cache facade
@@ -53,7 +53,7 @@ class CacheServiceTest extends TestCase
     {
         // Arrange
         $apiWrapper = new MockApiWrapper();
-        $cacheService = new CacheService($apiWrapper, 'fetchData', [1, 2]);
+        $cacheService = new Cachetastic($apiWrapper, 'fetchData', [1, 2]);
         $cacheService->setCacheDuration(60);
         $cacheService->setCacheKeyParams([1]);
 

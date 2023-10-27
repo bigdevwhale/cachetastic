@@ -4,7 +4,7 @@ namespace Cachetastic;
 
 use Illuminate\Support\Facades\Cache;
 
-class CacheService
+class Cachetastic
 {
     /**
      * The service or object to call the method on.
@@ -49,7 +49,7 @@ class CacheService
     private $customCacheKey = null;
 
     /**
-     * Create a new CacheService instance.
+     * Create a new Cachetastic instance.
      *
      * @param mixed $service The service or object to call the method on.
      * @param string $method The name of the method to call on the service.
@@ -68,7 +68,7 @@ class CacheService
      * @param int $cacheDuration The duration (in minutes) to cache the result.
      * @return $this
      */
-    public function setCacheDuration(int $cacheDuration): CacheService
+    public function setCacheDuration(int $cacheDuration): Cachetastic
     {
         $this->cacheDuration = $cacheDuration;
         return $this;
@@ -80,7 +80,7 @@ class CacheService
      * @param array $cacheKeyParams An array of parameter names to use for cache key generation.
      * @return $this
      */
-    public function setCacheKeyParams(array $cacheKeyParams): CacheService
+    public function setCacheKeyParams(array $cacheKeyParams): Cachetastic
     {
         $this->cacheKeyParams = $cacheKeyParams;
         return $this;
@@ -92,7 +92,7 @@ class CacheService
      * @param string $customCacheKey A custom cache key.
      * @return $this
      */
-    public function setCustomCacheKey(string $customCacheKey): CacheService
+    public function setCustomCacheKey(string $customCacheKey): Cachetastic
     {
         $this->customCacheKey = $customCacheKey;
         return $this;

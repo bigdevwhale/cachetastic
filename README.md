@@ -50,10 +50,10 @@ Getting started with Cachetastic is a piece of cake. Follow these simple steps t
 
    ```php
     // Import the CacheService class
-    use Cachetastic\CacheService;
+    use Cachetastic\Cachetastic;
 
     // Create an instance of CacheService
-    $cacheService = new CacheService(
+    $cacheService = new Cachetastic(
         new YourApiService(), // The service or object to call the method on.
         'fetchData',          // The name of the method to call on the service.
         [1, 2]               // An array of parameters to pass to the method.

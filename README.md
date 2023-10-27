@@ -29,7 +29,9 @@ Getting started with Cachetastic is a piece of cake. Follow these simple steps t
     ```bash
     composer require bigdevwhale/cachetastic
    ```
-2. Start caching method results with the CacheService class.
+
+2. Configure the default [cache driver](https://laravel.com/docs/10.x/cache) in your Laravel application
+3. Start caching method results with the CacheService class.
 
     ```php
     // Import the CacheService class
@@ -41,7 +43,7 @@ Getting started with Cachetastic is a piece of cake. Follow these simple steps t
     // Cache the result of a method
     $result = $cacheService->retrieveOrCache($yourService, 'yourMethod', $yourParams, $cacheDuration);
    ```
-3. Customize caching, force refresh, and error handling according to your needs.
+4. Customize caching, force refresh, and error handling according to your needs.
 
 That's it! Cachetastic seamlessly enhances your caching capabilities with minimal effort.
 

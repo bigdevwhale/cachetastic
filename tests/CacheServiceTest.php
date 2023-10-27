@@ -23,10 +23,8 @@ class CacheServiceTest extends TestCase
     {
         // Arrange
         $apiWrapper = new MockApiWrapper();
-        $cacheService = new CacheService();
-        $methodName = 'fetchData';
-        $params = [1, 2];
-        $cacheDuration = 60;
+        $cacheService = new CacheService($apiWrapper, 'fetchData', [1, 2]);
+        $cacheService->setCacheDuration(60);
 
         // Create a mock for the Cache facade
         $cacheMock = Mockery::mock('alias:Illuminate\Support\Facades\Cache');
@@ -35,12 +33,12 @@ class CacheServiceTest extends TestCase
         $cacheKey = 'fetchData:1_2';
         $expectedValue = 'data';
         $cacheMock->shouldReceive('remember')
-            ->withArgs([$cacheKey, $cacheDuration, Mockery::type('Closure')])
+            ->withArgs([$cacheKey, 60, Mockery::type('Closure')])
             ->once()
             ->andReturn($expectedValue);
 
         // Act
-        $result = $cacheService->retrieveOrCache($apiWrapper, $methodName, $params, $cacheDuration);
+        $result = $cacheService->retrieveOrCache();
 
         // Assert
         $this->assertEquals($expectedValue, $result);
@@ -54,27 +52,28 @@ class CacheServiceTest extends TestCase
     public function testForceRefresh()
     {
         // Arrange
-        $cacheService = new CacheService();
-        $methodName = 'fetchData';
-        $params = [1, 2];
-        $newValue = 'new data';
-        $cacheDuration = 60;
+        $apiWrapper = new MockApiWrapper();
+        $cacheService = new CacheService($apiWrapper, 'fetchData', [1, 2]);
+        $cacheService->setCacheDuration(60);
+        $cacheService->setCacheKeyParams([1]);
 
         // Create a mock for the Cache facade
         $cacheMock = Mockery::mock('alias:Illuminate\Support\Facades\Cache');
 
         // Set up the Cache facade to expect 'forget' and 'put' calls
-        $cacheKey = 'fetchData:1_2';
+        $cacheKey = 'fetchData:2';
         $cacheMock->shouldReceive('forget')
             ->withArgs([$cacheKey])
             ->once();
 
-        $cacheMock->shouldReceive('put')
-            ->withArgs([$cacheKey, $newValue, $cacheDuration])
-            ->once();
+        $newValue = 'new data';
+        $cacheMock->shouldReceive('remember')
+            ->withArgs([$cacheKey, 60, Mockery::type('Closure')])
+            ->once()
+            ->andReturn($newValue);
 
         // Act
-        $cacheService->forceRefresh($methodName, $params, $newValue, $cacheDuration);
+        $cacheService->forceRefresh();
 
         // Assert
         // Add assertions to verify that cache was updated as expected

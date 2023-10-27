@@ -64,6 +64,12 @@ Getting started with Cachetastic is a piece of cake. Follow these simple steps t
 
     // Cache the result of your API call
     $result = $cacheService->retrieveOrCache();
+   
+    // Force a refresh of the cached data if needed
+    $result = $cacheService->forceRefresh();
+   
+    // You can also use the optional $regenerate parameter to control if data should be regenerated
+    $result = $cacheService->forceRefresh(false)
     ```
 4. Customize caching, force refresh, and error handling according to your needs.
 

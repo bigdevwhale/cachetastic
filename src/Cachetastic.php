@@ -55,7 +55,7 @@ class Cachetastic
      * @param string $method The name of the method to call on the service.
      * @param array $params An array of parameters to pass to the method.
      */
-    public function __construct($service, string $method, array $params)
+    public function __construct($service, string $method, array $params = [])
     {
         $this->service = $service;
         $this->method = $method;

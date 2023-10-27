@@ -17,9 +17,21 @@ Welcome to Cachetastic, your secret weapon for optimizing caching in Laravel app
 - **Flexible Cache Management**: Force-refresh and update cache with new values on-demand.
 - **Error Handling**: Errors from external sources don't get cached; original exceptions are preserved.
 - **Automatic Cache Key Generation**: Cache keys are generated based on method name and parameters.
+- **Custom Parameter Keys**: Users can specify parameter keys for cache key generation.
 - **Laravel Integration**: Seamlessly integrates with Laravel's caching system.
 - **Clean and Elegant Code**: Well-structured and efficient codebase for easy use and contribution.
 - **PHPUnit and Mockery Read**y: Unit testing with PHPUnit and Mockery support included.
+
+## Use Cases
+Cachetastic is the perfect addition to your Laravel project for various use cases:
+
+- **API Responses**: Cache responses from external APIs to reduce latency and minimize rate limits.
+- **Database Queries**: Cache complex database queries and boost query performance.
+- **Expensive Computation**: Cache the results of computationally intensive methods for faster execution.
+- **Dynamic Content**: Cache dynamic content to reduce server load and improve user experience.
+- **Rate-Limited APIs**: Avoid exceeding rate limits by caching API responses and serving cached data.
+
+Cachetastic is your go-to tool for optimizing your Laravel application's performance in a snap!
 
 ## Getting Started
 Getting started with Cachetastic is a piece of cake. Follow these simple steps to integrate it into your Laravel project:
@@ -33,45 +45,44 @@ Getting started with Cachetastic is a piece of cake. Follow these simple steps t
 2. Configure the default [cache driver](https://laravel.com/docs/10.x/cache) in your Laravel application
 3. Start caching method results with the CacheService class.
 
-    ```php
+   ```php
     // Import the CacheService class
     use Cachetastic\CacheService;
 
     // Create an instance of CacheService
-    $cacheService = new CacheService();
+    $cacheService = new CacheService(
+        new YourApiService(), // The service or object to call the method on.
+        'fetchData',          // The name of the method to call on the service.
+        [1, 2]               // An array of parameters to pass to the method.
+    );
 
-    // Cache the result of a method
-    $result = $cacheService->retrieveOrCache($yourService, 'yourMethod', $yourParams, $cacheDuration);
-   ```
+    // Customize the cache duration (optional)
+    $cacheService->setCacheDuration(60);
+
+    // Cache the result of your API call
+    $result = $cacheService->retrieveOrCache();
+    ```
 4. Customize caching, force refresh, and error handling according to your needs.
 
 That's it! Cachetastic seamlessly enhances your caching capabilities with minimal effort.
 
-## Examples
+## Constructor Parameters
 
-Here's an example of caching the result of a method in a Laravel application:
+The CacheService constructor requires the following parameters:
 
-```php
-use Cachetastic\CacheService;
-use YourApiService;
+- **service**: The service or object to call the method on.
+- **method**: The name of the method to call on the service.
+- **params**: An array of parameters to pass to the method.
 
-// Create an instance of CacheService
-$cacheService = new CacheService();
+## Cache Customization Methods
 
-// Cache the result of your API call
-$result = $cacheService->retrieveOrCache(new YourApiService(), 'fetchData', [1, 2], 60);
-```
+Cachetastic provides the following methods for customizing caching:
 
-## Use Cases
-Cachetastic is the perfect addition to your Laravel project for various use cases:
+- **setCacheDuration(int $cacheDuration)**: Set the cache duration in minutes.
+- **setCacheKeyParams(array $cacheKeyParams)**: Set parameter keys to use for cache key generation.
+- **setCustomCacheKey(string $customCacheKey)**: Set a custom cache key to be used instead of generating one.
 
-- **API Responses**: Cache responses from external APIs to reduce latency and minimize rate limits.
-- **Database Queries**: Cache complex database queries and boost query performance.
-- **Expensive Computation**: Cache the results of computationally intensive methods for faster execution.
-- **Dynamic Content**: Cache dynamic content to reduce server load and improve user experience.
-- **Rate-Limited APIs**: Avoid exceeding rate limits by caching API responses and serving cached data.
-
-Cachetastic is your go-to tool for optimizing your Laravel application's performance in a snap!
+You can use these methods to further customize your caching experience.
 
 ## Contributing
 We welcome contributions from the open-source community. Feel free to submit bug reports, feature requests, or pull requests on our GitHub repository.

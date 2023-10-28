@@ -8,7 +8,7 @@
 - [Use Cases](#use-cases)
 - [Getting Started](#getting-started)
 - [Examples](#examples)
-- [Overwriting Cache Keys](#use-cases)
+- [Overwriting Cache Keys](#overwriting-cache-keys)
 - [Contributing](#contributing)
 - [License](#license)
 

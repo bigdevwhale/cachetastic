@@ -16,9 +16,8 @@
 Welcome to Cachetastic, your secret weapon for optimizing caching in Laravel applications. This package supercharges your Laravel caching capabilities, making it a breeze to cache method results and improve your application's performance. Say goodbye to redundant API calls and database queries, and hello to lightning-fast responses!
 
 ## Key Features
-- **Method-Level Caching**: Cache the results of any method, not just APIs, with ease.
+- **Method-Level Caching**: Cache the results of any method, whether regular or static, with ease.
 - **Flexible Cache Management**: Force-refresh and update cache with new values on-demand.
-- **Error Handling**: Errors from external sources don't get cached; original exceptions are preserved.
 - **Automatic Cache Key Generation**: Cache keys are generated based on method name and parameters.
 - **Custom Parameter Keys**: Users can specify parameter keys for cache key generation.
 - **Laravel Integration**: Seamlessly integrates with Laravel's caching system.
@@ -65,8 +64,8 @@ Getting started with Cachetastic is a piece of cake. Follow these simple steps t
     // Cache the result of your API call
     $result = $cacheService->retrieveOrCache();
    
-    // Force a refresh of the cached data if needed
-    $result = $cacheService->forceRefresh();
+     // Force a clear of the cached data if needed
+    $cacheService->forceClear();
    
     // You can also use the optional $regenerate parameter to control if data should be regenerated
     $result = $cacheService->forceRefresh(false)
@@ -94,6 +93,37 @@ Cachetastic provides the following methods for customizing caching:
 By default, the cache duration is set to 60 minutes.
 
 You can use these methods to further customize your caching experience.
+
+## Example
+Here's an example of caching the result of a method in a Laravel application, whether it's a regular or static method:
+```php
+use Cachetastic\Cachetastic;
+use YourApiService;
+
+// Create an instance of Cachetastic to cache the result of a regular method
+$cacheService = new Cachetastic(
+    new YourApiService(), // The service or object to call the method on.
+    'fetchData',          // The name of the method to call on the service.
+    [1, 2]               // An array of parameters to pass to the method.
+);
+
+// Customize the cache duration (optional)
+$cacheService->setCacheDuration(60);
+
+// Cache the result of your API call, whether it's a regular method
+$result = $cacheService->retrieveOrCache();
+
+// Create an instance of Cachetastic to cache the result of a static method
+$cacheServiceStatic = new Cachetastic(
+    YourApiService::class, // The class with the static method.
+    'fetchDataStatic',    // The name of the static method to call.
+    [1, 2]                // An array of parameters to pass to the static method.
+);
+
+// Cache the result of your API call, whether it's a static method
+$resultStatic = $cacheServiceStatic->retrieveOrCache();
+```
+
 
 ## Overwriting Cache Keys
 Please note that if two methods are executed in the same class with only array parameters, they will overwrite each 

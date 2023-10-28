@@ -108,19 +108,25 @@ class Cachetastic
         $cacheKey = $this->generateCacheKey();
 
         return Cache::remember($cacheKey, $this->cacheDuration, function () {
-            return call_user_func_array([$this->service, $this->method], $this->params);
+            if (is_object($this->service)) {
+                // Call a method on an instance
+                return call_user_func_array([$this->service, $this->method], $this->params);
+            } elseif (is_string($this->service) && method_exists($this->service, $this->method)) {
+                // Call a static method on a class
+                return forward_static_call_array([$this->service, $this->method], $this->params);
+            } else {
+                throw new \Exception('Invalid service or method.');
+            }
         });
     }
 
     /**
-     * Force a refresh of the cached data.
+     * Force a clear of the cached data.
      */
-    public function forceRefresh($regenerate = true)
+    public function forceClear()
     {
         $cacheKey = $this->generateCacheKey();
         Cache::forget($cacheKey);
-
-        return $regenerate ? $this->retrieveOrCache() : null;
     }
 
     /**

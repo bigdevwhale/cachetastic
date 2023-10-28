@@ -5,9 +5,9 @@
 ## Table of Contents
 - [Introduction](#introduction)
 - [Key Features](#key-features)
+- [Use Cases](#use-cases)
 - [Getting Started](#getting-started)
 - [Examples](#examples)
-- [Use Cases](#use-cases)
 - [Overwriting Cache Keys](#use-cases)
 - [Contributing](#contributing)
 - [License](#license)
